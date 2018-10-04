@@ -1,0 +1,5 @@
+
+- requireが見つかりません
+
+npm install @types/node --save-dev
+
