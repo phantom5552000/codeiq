@@ -2,65 +2,42 @@
     var R_1 = require('ramda');
     var printf = require('printf');
     var _a = require('perf_hooks'), PerformanceObserver_1 = _a.PerformanceObserver, performance_1 = _a.performance;
-    var result = [];
-    var all = [[0, 0, 0], [1, 1]];
-    console.log(all);
-    var isAllEmpty_1 = function (ll) {
-        for (var i = 0; i < ll.length; i++) {
-            if (ll[i].length > 0)
-                return false;
+    var number_male = 20; //parseInt(process.argv[2]);
+    var number_female = 10; //parseInt(process.argv[3]);
+    var count_f_1 = 0;
+    var factorial_1 = R_1.memoize(function (n) {
+        count_f_1 += 1;
+        return R_1.product(R_1.range(1, n + 1));
+    });
+    var combi = function (q, r) {
+        var p = q + r;
+        var loop = p - q;
+        var prd = 1;
+        for (var i = 0; i < loop; i++) {
+            prd = prd * (p - i);
         }
-        return true;
-    };
-    var sameNumber_1 = function (l) {
-        if (l.length == 0)
-            return false;
-        if (l.length % 2 == 1) {
-            return false;
-        }
-        return l.length / 2 == R_1.sum(l);
-    };
-    var perm_1 = function (remain, result, found) {
-        //console.log("remain: ", remain);
-        //console.log("  result: ", result);
-        //console.log(`count: ${count}`);
-        if (sameNumber_1(result)) {
-            //console.log(`${result}, sum=${R.sum(result)}, ${sameNumber(result)}`);
-            return 0;
-        }
-        if (isAllEmpty_1(remain)) {
-            if (found[0] % 1000 == 0)
-                console.log(result + ", sum=" + R_1.sum(result) + ", " + sameNumber_1(result));
-            //console.log("*** ",result, R.sum(result), sameNumber(result));
-            found[0]++;
-        }
-        for (var i = 0; i < remain.length; i++) {
-            //console.log("---%d", i);
-            var remain_copy = JSON.parse(JSON.stringify(remain)); // deep copy
-            if (remain_copy[i].length == 0)
-                continue;
-            var res_copy = JSON.parse(JSON.stringify(result));
-            var first = R_1.nth(0, remain_copy[i]);
-            remain_copy[i].pop();
-            res_copy.push(first);
-            //console.log("  remain_copy: ", remain_copy);
-            //console.log("   res_copy: ", res_copy);
-            perm_1(remain_copy.slice(), res_copy.slice(), found);
-        }
-    };
-    var makeCopy = function (obj, times) {
-        var l = [];
-        for (var i = 0; i < times; i++) {
-            l.push(obj);
-        }
-        return l;
+        var b = factorial_1(r);
+        return prd / b;
     };
     var count = 0;
-    var found = [0];
-    perm_1([makeCopy(0, 3), makeCopy(1, 2)], [], found); //=> [1, 2, 3]
-    console.log(found);
-    found[0] = 0;
-    perm_1([makeCopy(0, 30), makeCopy(1, 20)], [], found); //=> [1, 2, 3]
-    console.log(found);
-    //perm([makeCopy(0,15), makeCopy(1,10)], result); //=> [1, 2, 3]
+    var start = performance_1.now();
+    console.log("factorial(" + number_male + ") = " + factorial_1(number_male));
+    console.log("factorial(" + number_female + ") = " + factorial_1(number_female));
+    //perm([makeCopy(0,number_male), makeCopy(1,number_female)], [] ,found); //=> [1, 2, 3]
+    var c = combi(number_male, number_female);
+    console.log("n: " + number_male + ", " + number_female + ", combi: " + c);
+    var sub_list = [];
+    for (var m = number_male - 1, f = number_female - 1; f >= 0; m--, f--) {
+        var c1 = combi(m, f);
+        sub_list.push(c1);
+        console.log("  n: " + m + ", " + f + ", combi: " + c1);
+    }
+    var end = performance_1.now();
+    //console.log(found);
+    var elapsed = (end - start);
+    var elapsedStr = elapsed.toPrecision(3);
+    //console.log("result.len=%d", result.length);
+    console.log("n: " + number_male + ", " + number_female + ", combi: " + c + "  " + elapsedStr + " mSec");
+    var a = c - R_1.sum(sub_list);
+    console.log(a);
 }

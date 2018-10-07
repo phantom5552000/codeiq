@@ -3,67 +3,50 @@
     const printf = require('printf');
     const { PerformanceObserver, performance } = require('perf_hooks');
 
-    let result:Array<number> = [];
-    let all = [[0,0,0], [1,1]];
-    console.log(all);
+    let number_male = 20;//parseInt(process.argv[2]);
+    let number_female = 10;//parseInt(process.argv[3]);
+    let count_f = 0;
+    const factorial = R.memoize((n:number) => {
+        count_f += 1;
+        return R.product(R.range(1, n + 1));
+        }
+    );
 
-    let isAllEmpty = (ll:Array<Array<any>>) =>{
-        for(let i=0; i<ll.length; i++){
-            if(ll[i].length > 0) return false;
+    let combi = (q:number, r:number) =>{
+        let p = q+r;
+        let loop = p - q;
+        let prd = 1;
+        for(let i=0; i<loop; i++){
+            prd = prd * (p - i);
         }
-        return true;
-    }
-
-    let sameNumber = (l:Array<number>):boolean => {
-        if(l.length == 0) return false;
-        if(l.length % 2 ==1){
-            return false;
-        }
-        return l.length/2 == R.sum(l);
-    }
-    let perm = (remain:Array<Array<number>>, result:Array<number>, found:Array<number>) => {
-        //console.log("remain: ", remain);
-        //console.log("  result: ", result);
-        //console.log(`count: ${count}`);
-        if(sameNumber(result)){
-            //console.log(`${result}, sum=${R.sum(result)}, ${sameNumber(result)}`);
-            return 0;
-        }
-        if(isAllEmpty(remain)){
-            if(found[0]%1000==0)console.log(`${result}, sum=${R.sum(result)}, ${sameNumber(result)}`);
-             //console.log("*** ",result, R.sum(result), sameNumber(result));
-            found[0]++;
-            }
-        
-        for(let i=0;i<remain.length;i++){
-            //console.log("---%d", i);
-            let remain_copy = JSON.parse(JSON.stringify(remain)); // deep copy
-            if(remain_copy[i].length == 0)continue;
-            let res_copy = JSON.parse(JSON.stringify(result));
-            let first = R.nth(0,remain_copy[i]);
-            remain_copy[i].pop();
-            res_copy.push(first);
-            //console.log("  remain_copy: ", remain_copy);
-            //console.log("   res_copy: ", res_copy);
-    
-            perm(remain_copy.slice(), res_copy.slice(), found);
-        }
-    }
-    let    makeCopy = (obj:any, times:number) => {
-        let l = [];
-        for(let i=0;i<times;i++){
-            l.push(obj);
-        }
-        return l;
+        let b = factorial(r);
+        return prd/b;
     }
     let count = 0;
-    let found:Array<number> =[0];
-    perm([makeCopy(0,3), makeCopy(1,2)], [] ,found); //=> [1, 2, 3]
-    console.log(found);
     
-    found[0] = 0;
-    perm([makeCopy(0,30), makeCopy(1,20)], [] ,found); //=> [1, 2, 3]
-    console.log(found);
-    //perm([makeCopy(0,15), makeCopy(1,10)], result); //=> [1, 2, 3]
+    const start = performance.now();
+    console.log(`factorial(${number_male}) = ${factorial(number_male)}`);
+    console.log(`factorial(${number_female}) = ${factorial(number_female)}`);
+    //perm([makeCopy(0,number_male), makeCopy(1,number_female)], [] ,found); //=> [1, 2, 3]
+    let c = combi(number_male, number_female);
+    console.log(`n: ${number_male}, ${number_female}, combi: ${c}`);
 
+    let sub_list = [];
+    for(let m=number_male-1, f=number_female-1; f>=0;m--, f--){
+        let c1 = combi(m, f);
+        sub_list.push(c1);
+        console.log(`  n: ${m}, ${f}, combi: ${c1}`);
+    
+    }
+
+    const end = performance.now();
+    //console.log(found);
+    
+    const elapsed = (end - start);
+    const elapsedStr = elapsed.toPrecision(3);
+    
+    //console.log("result.len=%d", result.length);
+    console.log(`n: ${number_male}, ${number_female}, combi: ${c}  ${elapsedStr} mSec`);
+    let a = c - R.sum(sub_list);
+    console.log(a);
 }
