@@ -32,6 +32,11 @@
         //let fib = fib_1 + fib_2;
         //console.log(fib(i));
         let f = fib(i);
+        if(f < fib(i-1)){
+            // overflowを検知したいがこれはダメ
+            console.log(`overflow detected. fib(${i})=${fib(i)} fib(${i-1})=${fib(i-1)}  `);
+            break;
+        }
         let s = R.sum(R.split("")(f.toString(10)));
         if (f%s == 0){
             count++;
