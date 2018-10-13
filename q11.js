@@ -31,8 +31,9 @@
         //let fib = fib_1 + fib_2;
         //console.log(fib(i));
         var f = fib_1(i);
-        if (f < fib_1(i - 1)) {
-            // overflowを検知したいがこれはダメ
+        //if(f > Number.MAX_VALUE){
+        // overflowを検知したいがこれはダメ
+        if (f > Math.pow(2, 53)) {
             console.log("overflow detected. fib(" + i + ")=" + fib_1(i) + " fib(" + (i - 1) + ")=" + fib_1(i - 1) + "  ");
             break;
         }
