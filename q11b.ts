@@ -20,9 +20,9 @@
     //console.log(`${sum(eu, n)}`);
 
     //console.log(`${sum(us, n)}`);
-    let fib0 = (n:any):any => {
-        if (n == 0) return 1;
-        else if (n ==1) return 1;
+    let fib0 = (n:number):any => {
+        if (n == 0) return bigInt(1);
+        else if (n == 1) return bigInt(1);
         else {
             return bigInt(fib(n-2)).add(fib(n-1));
         }

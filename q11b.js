@@ -20,9 +20,9 @@
     //console.log(`${sum(us, n)}`);
     var fib0 = function (n) {
         if (n == 0)
-            return 1;
+            return bigInt_1(1);
         else if (n == 1)
-            return 1;
+            return bigInt_1(1);
         else {
             return bigInt_1(fib_1(n - 2)).add(fib_1(n - 1));
         }
