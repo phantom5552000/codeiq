@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/bigint": "^5.5.29",
+    "Math": "0.0.1-security",
     "big-integer": "^1.6.36",
     "bigint-typescript-definitions": "^5.5.3-0",
     "printf": "^0.5.1",
