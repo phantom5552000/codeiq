@@ -9,7 +9,7 @@
             "type": "node",
             "request": "launch",
             "name": "プログラムの起動",
-            "program": "${workspaceFolder}/q13.js",
+            "program": "${workspaceFolder}/q14.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ],
