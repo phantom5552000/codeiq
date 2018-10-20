@@ -49,11 +49,38 @@
             console.log(formula);
         }
     }
-    let cc = 0;
+    //let cc = 0;
+    let cc = R.map((s:string) => { return s.toLowerCase()}, countries);
+    console.log(cc);
+    //console.log(cc[0]);
+    //console.log(cc[3]);
+
+    let maxc=0;
     let make_combi = (e:Array<number>):Array<Array<number>> =>{
         let r:Array<Array<number>> = [];
         let com = (e:Array<number>, res:Array<number>):Array<number> =>{
-            // リストから一つ取り出す
+
+            if(res.length >=2){
+                for(let i=0;i<res.length-1;i++){
+                    if(R.last(cc[res[i]]) != R.head(cc[res[i+1]])){
+                        if(res.length>2){
+                            let ccs = []
+                            for(let j=0;j<res.length-1;j++){
+                                ccs.push(cc[res[j]])
+                            }
+                            //console.log(ccs.join("-"))
+                            if(res.length > maxc){
+                                maxc = res.length;
+                                console.log(ccs.length)
+                                console.log(ccs.join("-"))
+                            }
+
+                        }
+                        return [];
+                    }
+                }
+            }
+
             if(e.length == 0) {
                 r.push(res);
                 return res;
@@ -74,8 +101,9 @@
 
     const start = performance.now();
 
-    let c = make_combi(R.range(0,n));
-    console.log(`n:${n}, n!: ${c.length}`);
+    let numC = countries.length;
+    let c = make_combi(R.range(0,numC));
+    console.log(`n:${numC}, n!: ${c.length}`);
 
     const end = performance.now();
     //console.log(found);    
