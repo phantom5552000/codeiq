@@ -12,9 +12,6 @@
             "USA", "Belgium", "Algeria", "Russia",
             "Korea Republic"];
 
-    //console.log(R);
-    //const Math = require('Math');
-
     let eval_print = (s:string):any =>{
         //console.log(s);
         let r = eval(s);
@@ -26,34 +23,8 @@
         n  = parseInt(process.argv[2]);
     }
     console.log(`n:${n}`);
-    let meet = (str:string) => {
-        //console.log(`meet(${str})`);
-        let r = str[0], e = str[1], a = str[2], d = str[3];
-        let w = str[4], i = str[5], t = str[6], l = str[7];
-        let k = str[8], s = str[9];
-        if(r == "0" || w == "0" || t == "0") return;
-        if((Number(d)+Number(e)+Number(k))%10 != Number(l)) return;
-        let sub = Number(s) -  Number(w);
-        if(sub == 0) return;
-        if(sub > 2) return;
-        let sum_at = Number(a)+Number(t);
-        if (sum_at !=8 && sum_at != 9 && sum_at !=10) return;
-    
-        let read = r+e+a+d;
-        let write = w+r+i+t+e;
-        let talk = t+a+l+k;
-        let skill = s+k+i+l+l;
-        let formula = `${read}+${write}+${talk}==${skill}`;
-
-        if(eval(formula)){
-            console.log(formula);
-        }
-    }
-    //let cc = 0;
     let cc = R.map((s:string) => { return s.toLowerCase()}, countries);
     console.log(cc);
-    //console.log(cc[0]);
-    //console.log(cc[3]);
 
     let maxc=0;
     let make_combi = (e:Array<number>):Array<Array<number>> =>{
